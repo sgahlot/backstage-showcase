@@ -53,6 +53,7 @@ import {
 import { customLightTheme } from './themes/lightTheme';
 import { customDarkTheme } from './themes/darkTheme';
 import { useUpdateTheme } from './hooks/useUpdateTheme';
+import { SysInfoPage } from '@internal/plugin-sys-info';
 
 const app = createApp({
   apis,
@@ -181,6 +182,7 @@ const routes = (
     <Route path="/ocm" element={<OcmPage />} />
     <Route path="/learning-paths" element={<LearningPaths />} />
     <Route path="/lighthouse" element={<LighthousePage />} />
+    <Route path="/sys-info" element={<SysInfoPage />} />
   </FlatRoutes>
 );
 
