@@ -9,7 +9,6 @@
     "prepare": "husky install",
     "ci": "turbo run lint build test",
     "start": "turbo run start --parallel",
-    "start-dev": "turbo run start --filter=app --filter=backend",
     "start-backend": "turbo run start --filter=backend",
     "build": "turbo run build",
     "tsc": "tsc",
@@ -51,8 +50,7 @@
   },
   "prettier": "@spotify/prettier-config",
   "lint-staged": {
-    "*": "yarn run prettier:fix",
-    "*.{js,jsx,ts,tsx,mjs,cjs}": "yarn run lint -- -- --fix"
+    "*": "yarn run prettier:fix"
   },
   "packageManager": "yarn@1.22.19"
 }
