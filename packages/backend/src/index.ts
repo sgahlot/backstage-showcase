@@ -42,6 +42,7 @@ import techdocs from './plugins/techdocs';
 import { PluginEnvironment } from './types';
 import { metricsHandler } from './metrics';
 import { RequestHandler } from 'express';
+import sysInfo from './plugins/sys-info';
 
 function makeCreateEnv(config: Config) {
   const root = getRootLogger();
@@ -161,6 +162,19 @@ async function main() {
   await addPlugin({ plugin: 'auth', apiRouter, createEnv, router: auth });
   await addPlugin({ plugin: 'catalog', apiRouter, createEnv, router: catalog });
   await addPlugin({ plugin: 'search', apiRouter, createEnv, router: search });
+
+  // SG: Don't actually need it as the next 2 lines
+  // (sysInfoEnv and apiRouter.use for "/sys-info") works without adding this line
+  await addPlugin({
+    plugin: 'sys-info',
+    apiRouter,
+    createEnv,
+    router: sysInfo,
+  });
+
+  // const sysInfoEnv = useHotMemoize(module, () => createEnv('sysInfo'));
+  // apiRouter.use('/sys-info', await sysInfo(sysInfoEnv));
+
   await addPlugin({
     plugin: 'scaffolder',
     apiRouter,
@@ -269,6 +283,17 @@ async function main() {
     service,
     root: '',
     router: metricsHandler(),
+  });
+
+  // SG: Don't actually need the addRouter for sysInfo as the apiRouter.use works as well
+  const sysInfoEnv = useHotMemoize(module, () => createEnv('sysInfo'));
+  // apiRouter.use('/sys-info', await sysInfo(sysInfoEnv));
+  await addRouter({
+    name: 'sys-info',
+    config,
+    service,
+    root: '',
+    router: await sysInfo(sysInfoEnv),
   });
 
   await service.start().catch(err => {
