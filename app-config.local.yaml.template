@@ -33,13 +33,24 @@ integrations:
       token: temp
 
 catalog:
+  # import:
+  #   entityFilename: catalog-info.yaml
+  #   pullRequestBranchName: backstage-integration
   rules:
     - allow: [Component, System, Group, Resource, Location, Template, API, User]
+  # providers:
+  #   githubOrg:
+  #     default:
+  #       id: development
+  #       orgUrl: ${GITHUB_ORG_URL}
   locations:
     # All of these need to be uncommented for the Templates to show up in "Create..."
     # Note: integrations.github[].apps must be correctly configured to read GitHub locations
     - type: file
       target: ../../catalog-entities/all.yaml
+    # Need this otherwise we get "User not found" error after logging into GitHub
+    - type: url
+      target: https://github.com/sgahlot/backstage-tutorial-nodejs/blob/master/catalog-user-info.yaml
     - type: url
       target: https://github.com/appeng-backstage/backstage/blob/main/catalog-info.yaml
     - type: url
