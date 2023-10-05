@@ -1,6 +1,7 @@
 export type CpuData = {
   model: string;
   speed: number;
+  // times: CpuTimeData;
   times: CpuTimeData | Record<string, CpuTimeData>;
 };
 
@@ -10,6 +11,18 @@ export type CpuTimeData = {
   nice: number;
   sys: number;
   user: number;
+};
+
+export type AllData = {
+  cpus: Array<CpuData>;
+  freeMem: number;
+  hostname: string;
+  loadavg: Array<number>;
+  operatingSystem: string;
+  platform: string;
+  release: string;
+  totalMem: number;
+  uptime: number;
 };
 
 export type OtherSysInfoData = {
@@ -26,7 +39,17 @@ export type OtherSysInfoData = {
 };
 
 export type SysInfoData = {
+  // columns: Record<keyof SysInfoData['allData'], SysInfoData>
+  // allData: AllData | Record<string, AllData>
   cpus: Array<CpuData>;
-  otherData: OtherSysInfoData;
-  otherDataAsArray: Array<OtherSysInfoData>;
+  freeMem: number;
+  hostname: string;
+  loadavg: Array<number>;
+  operatingSystem: string;
+  platform: string;
+  release: string;
+  totalMem: number;
+  uptime: number;
+  // otherData: OtherSysInfoData;
+  otherDataAsArray: OtherSysInfoData[];
 };

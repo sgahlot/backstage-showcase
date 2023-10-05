@@ -1,6 +1,7 @@
 import { ConfigApi, createApiRef } from '@backstage/core-plugin-api';
 import { SysInfoData } from './types';
 import { SYS_INFO_BACKEND_URL } from './constants';
+import { NotFoundError, ResponseError } from '@backstage/errors';
 
 export type SysInfoAPI = {
   getData: (id: string) => Promise<SysInfoData>;
@@ -27,9 +28,24 @@ export class SysInfoApiClient implements SysInfoAPI {
       `${backendUrl}/api/sys-info/system-info?module=API&format=json&id=${id}`,
       {
         method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
       },
     );
 
-    return res.json();
+    if (res.ok) {
+      return (await res.json()) as SysInfoData;
+
+      // SG: Uncomment following lines to see the data coming back
+      // const data = await res.json() as SysInfoData;
+      // // eslint-disable-next-line no-console
+      // console.log(`Data:: CPUs -> ${data.cpus}\n\n OTHER_DATA -> ${data.otherData}`);
+      // return data;
+    } else if (res.status === 404) {
+      throw new NotFoundError(`Not found for backend url: [${backendUrl}]`);
+    }
+
+    throw await ResponseError.fromResponse(res);
   }
 }

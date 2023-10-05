@@ -29,7 +29,7 @@ export const SysInfoPage = sysInfoPlugin.provide(
   createRoutableExtension({
     name: 'SysInfoPage',
     component: () =>
-      import('./components/ExampleComponent').then(m => m.ExampleComponent),
+      import('./components/SysInfoPage').then(m => m.SysInfoPage),
     mountPoint: rootRouteRef,
   }),
 );
