@@ -53,6 +53,7 @@
     "@emotion/styled": "11.11.0",
     "@immobiliarelabs/backstage-plugin-gitlab": "6.2.0",
     "@internal/plugin-sys-info": "^0.1.0",
+    "@internal/plugin-system-info": "^0.1.0",
     "@janus-idp/backstage-plugin-analytics-provider-segment": "1.1.1",
     "@janus-idp/backstage-plugin-jfrog-artifactory": "1.1.2",
     "@janus-idp/backstage-plugin-nexus-repository-manager": "1.1.0",

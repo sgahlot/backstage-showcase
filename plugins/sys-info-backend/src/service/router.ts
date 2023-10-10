@@ -18,18 +18,22 @@ export async function createRouter(
 
   router.get('/system-info', async (_, res) => {
     const systemInfo = {
-      hostname: os.hostname(),
-      operatingSystem: os.type(),
-      platform: os.platform(),
-      release: os.release(),
-      uptime: os.uptime(),
-      loadavg: os.loadavg(),
-      totalMem: os.totalmem(),
-      freeMem: os.freemem(),
+      data: {
+        hostname: os.hostname(),
+        operatingSystem: os.type(),
+        platform: os.platform(),
+        release: os.release(),
+        uptime: os.uptime(),
+        loadavg: os.loadavg(),
+        totalMem: os.totalmem(),
+        freeMem: os.freemem(),
+      },
       cpus: os.cpus(),
     };
 
-    logger.info(`Sending systemInfo for hostname=${systemInfo.hostname}...`);
+    logger.info(
+      `Sending systemInfo for hostname=${systemInfo.data.hostname}...`,
+    );
 
     res.send(systemInfo);
   });

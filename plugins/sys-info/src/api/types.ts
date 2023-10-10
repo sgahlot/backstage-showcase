@@ -13,19 +13,7 @@ export type CpuTimeData = {
   user: number;
 };
 
-export type AllData = {
-  cpus: Array<CpuData>;
-  freeMem: number;
-  hostname: string;
-  loadavg: Array<number>;
-  operatingSystem: string;
-  platform: string;
-  release: string;
-  totalMem: number;
-  uptime: number;
-};
-
-export type OtherSysInfoData = {
+type SysInfoMainData = {
   cpuModel: string;
   cpuSpeed: number;
   freeMem: number;
@@ -39,17 +27,7 @@ export type OtherSysInfoData = {
 };
 
 export type SysInfoData = {
-  // columns: Record<keyof SysInfoData['allData'], SysInfoData>
-  // allData: AllData | Record<string, AllData>
   cpus: Array<CpuData>;
-  freeMem: number;
-  hostname: string;
-  loadavg: Array<number>;
-  operatingSystem: string;
-  platform: string;
-  release: string;
-  totalMem: number;
-  uptime: number;
-  // otherData: OtherSysInfoData;
-  otherDataAsArray: OtherSysInfoData[];
+  data: SysInfoMainData;
+  otherDataAsArray: SysInfoMainData[];
 };

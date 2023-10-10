@@ -2,7 +2,7 @@
 import React from 'react';
 import useAsync from 'react-use/lib/useAsync';
 
-import { InfoCard, Table, TableColumn } from '@backstage/core-components';
+import { InfoCard, Table } from '@backstage/core-components';
 
 import {
   Box,
@@ -18,49 +18,7 @@ import ContactMail from '@material-ui/icons/ContactMail';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { sysInfoApiRef } from '../../api';
-
-const sysInfoCpuColumns: TableColumn[] = [
-  {
-    title: 'CPU Model',
-    field: 'model',
-  },
-  {
-    title: 'CPU Speed',
-    field: 'speed',
-  },
-  {
-    title: 'Times Idle',
-    field: 'times.user',
-  },
-  {
-    title: 'Times IRQ',
-    field: 'times.irq',
-  },
-  {
-    title: 'Times Nice',
-    field: 'times.nice',
-  },
-  {
-    title: 'Times Sys',
-    field: 'times.sys',
-  },
-  {
-    title: 'Times User',
-    field: 'times.user',
-  },
-];
-
-const sysInfoOtherColumns: TableColumn[] = [
-  { title: 'Hostname', field: 'hostname', highlight: true },
-  { title: 'OS', field: 'operatingSystem', width: '10%' },
-  { title: 'Platform', field: 'platform', width: '10%' },
-  { title: 'CPU Model', field: 'cpuModel', width: '10%' },
-  { title: 'CPU Speed', field: 'cpuSpeed', width: '10%' },
-  { title: 'Total Memory', field: 'totalMem', width: '20%' },
-  { title: 'Free Memory', field: 'freeMem', width: '10%' },
-  { title: 'Release', field: 'release', width: '10%' },
-  { title: 'Uptime', field: 'uptime', width: '10%' },
-];
+import { sysInfoCpuColumns, sysInfoMainDataColumns } from './types';
 
 export const SysInfoHomePage = () => {
   const config = useApi(configApiRef);
@@ -69,36 +27,22 @@ export const SysInfoHomePage = () => {
   const contactUs = config.getOptionalString('sysInfo.contactUsLink');
   const sysInfoUrl = config.getOptionalString('sysInfo.frontendBaseUrl');
 
+  // // eslint-disable-next-line no-console
+  // console.log(`contactUs: [${contactUs}]`);
+
   const { loading: isSysInfoLoading, value: sysInfoData } =
     useAsync(async () => {
-      const data = await sysInfoApi.getData('1');
+      const systemInfoData = await sysInfoApi.getData('1');
 
-      // eslint-disable-next-line no-console
-      console.log(`response: ${JSON.stringify(data)}`);
+      // To display the main data in a table, prepare the array to contain the ONLY data we have
+      systemInfoData.otherDataAsArray = [];
+      systemInfoData.otherDataAsArray[0] = systemInfoData.data;
+      systemInfoData.otherDataAsArray[0].cpuModel =
+        systemInfoData.cpus[0].model;
+      systemInfoData.otherDataAsArray[0].cpuSpeed =
+        systemInfoData.cpus[0].speed;
 
-      // eslint-disable-next-line no-console
-      console.log(`data.cpus: ${JSON.stringify(data.cpus)}`);
-
-      // eslint-disable-next-line no-console
-      console.log(
-        `data -> platform: ${data.platform}, OS: ${data.operatingSystem}`,
-      );
-
-      data.otherDataAsArray = [];
-      data.otherDataAsArray[0] = {
-        cpuModel: data.cpus[0].model,
-        cpuSpeed: data.cpus[0].speed,
-        operatingSystem: data.operatingSystem,
-        platform: data.platform,
-        hostname: data.hostname,
-        freeMem: data.freeMem,
-        totalMem: data.totalMem,
-        release: data.release,
-        uptime: data.uptime,
-        loadavg: data.loadavg,
-      };
-
-      return data;
+      return systemInfoData;
     }, []);
 
   return (
@@ -134,62 +78,50 @@ export const SysInfoHomePage = () => {
         </Box>
       </InfoCard>
 
-      <Grid style={{ marginTop: '1rem' }} container spacing={2}>
-        <Table
-          title="System Info Details - CPUs"
-          columns={sysInfoCpuColumns}
-          isLoading={isSysInfoLoading}
-          data={sysInfoData?.cpus || []}
-          options={{
-            padding: 'dense',
-            pageSize: 10,
-            emptyRowsWhenPaging: false,
-            search: false,
-          }}
-          emptyContent={
-            <Box style={{ textAlign: 'center', padding: '15px' }}>
-              <Typography variant="body1">Backend data NOT found</Typography>
-            </Box>
-          }
-        />
+      <Grid style={{ marginTop: '5rem' }} container spacing={2}>
+        <Grid item xs={10}>
+          <Table
+            title="System Info Details"
+            columns={sysInfoMainDataColumns}
+            isLoading={isSysInfoLoading}
+            data={sysInfoData?.otherDataAsArray || []}
+            options={{
+              padding: 'dense',
+              pageSize: 1,
+              emptyRowsWhenPaging: false,
+              search: false,
+            }}
+            emptyContent={
+              <Box style={{ textAlign: 'center', padding: '15px' }}>
+                <Typography variant="body1">Backend data NOT found</Typography>
+              </Box>
+            }
+          />
+        </Grid>
 
-        <Table
-          title="System Info Details - Other data"
-          columns={sysInfoOtherColumns}
-          isLoading={isSysInfoLoading}
-          data={sysInfoData?.otherDataAsArray || []}
-          options={{
-            padding: 'dense',
-            pageSize: 10,
-            emptyRowsWhenPaging: false,
-            search: false,
-          }}
-          emptyContent={
-            <Box style={{ textAlign: 'center', padding: '15px' }}>
-              <Typography variant="body1">Backend data NOT found</Typography>
-            </Box>
-          }
-        />
+        <Grid item xs={10}>
+          <Table
+            title="System Info Details - CPUs"
+            columns={sysInfoCpuColumns}
+            isLoading={isSysInfoLoading}
+            data={sysInfoData?.cpus || []}
+            options={{
+              padding: 'dense',
+              pageSize: 10,
+              emptyRowsWhenPaging: false,
+              search: false,
+            }}
+            emptyContent={
+              <Box style={{ textAlign: 'center', padding: '15px' }}>
+                <Typography variant="body1">Backend data NOT found</Typography>
+              </Box>
+            }
+          />
+        </Grid>
       </Grid>
     </>
   );
 };
-
-// export const SysInfoPage = () => {
-//   const { loading: isSysInfoLoading, value: sysInfoData } =
-//     useAsync(async () => {
-//       const data = await sysInfoApi.getData('1');
-//
-//       if (data.otherData) {
-//         data.otherDataAsArray = [];
-//         data.otherDataAsArray[0] = data.otherData;
-//         data.otherDataAsArray[0].cpuModel = data.cpus[0].model;
-//         data.otherDataAsArray[0].cpuSpeed = data.cpus[0].speed;
-//       }
-//
-//       return data;
-//     }, []);
-// }
 
 const queryClient = new QueryClient();
 
