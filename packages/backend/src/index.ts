@@ -319,16 +319,16 @@ async function main() {
     router: metricsHandler(),
   });
 
-  // SG: Don't actually need the addRouter for sysInfo as the apiRouter.use works as well
-  const sysInfoEnv = useHotMemoize(module, () => createEnv('sysInfo'));
-  // apiRouter.use('/sys-info', await sysInfo(sysInfoEnv));
-  await addRouter({
-    name: 'sys-info',
-    config,
-    service,
-    root: '',
-    router: await sysInfo(sysInfoEnv),
-  });
+  // // SG: Don't actually need the addRouter for sysInfo as the apiRouter.use works as well
+  // const sysInfoEnv = useHotMemoize(module, () => createEnv('sysInfo'));
+  // // apiRouter.use('/sys-info', await sysInfo(sysInfoEnv));
+  // await addRouter({
+  //   name: 'sys-info',
+  //   config,
+  //   service,
+  //   root: '',
+  //   router: await sysInfo(sysInfoEnv),
+  // });
 
   await service.start().catch(err => {
     console.log(err);
