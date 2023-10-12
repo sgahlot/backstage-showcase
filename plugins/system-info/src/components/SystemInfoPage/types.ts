@@ -43,7 +43,7 @@ export const sysInfoMainDataColumns: TableColumn[] = [
   { title: 'Uptime', field: 'uptime', width: '10%' },
 ];
 
-export type CpuData = {
+type CpuData = {
   model: string;
   speed: number;
   times: CpuTimeData; // | Record<string, CpuTimeData>;
@@ -73,5 +73,5 @@ type SysInfoMainData = {
 export type SysInfoData = {
   cpus: Array<CpuData>;
   data: SysInfoMainData;
-  otherDataAsArray: SysInfoMainData[];
+  mainDataAsArray: SysInfoMainData[];
 };

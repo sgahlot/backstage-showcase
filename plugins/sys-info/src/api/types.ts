@@ -29,5 +29,5 @@ type SysInfoMainData = {
 export type SysInfoData = {
   cpus: Array<CpuData>;
   data: SysInfoMainData;
-  otherDataAsArray: SysInfoMainData[];
+  mainDataAsArray: SysInfoMainData[];
 };

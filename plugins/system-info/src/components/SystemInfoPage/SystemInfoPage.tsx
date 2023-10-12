@@ -37,12 +37,10 @@ export const SystemInfoPage = () => {
       );
 
       // To display the main data in a table, prepare the array to contain the ONLY data we have
-      systemInfoData.otherDataAsArray = [];
-      systemInfoData.otherDataAsArray[0] = systemInfoData.data;
-      systemInfoData.otherDataAsArray[0].cpuModel =
-        systemInfoData.cpus[0].model;
-      systemInfoData.otherDataAsArray[0].cpuSpeed =
-        systemInfoData.cpus[0].speed;
+      systemInfoData.mainDataAsArray = [];
+      systemInfoData.mainDataAsArray[0] = systemInfoData.data;
+      systemInfoData.mainDataAsArray[0].cpuModel = systemInfoData.cpus[0].model;
+      systemInfoData.mainDataAsArray[0].cpuSpeed = systemInfoData.cpus[0].speed;
 
       return systemInfoData;
     }, []);
@@ -55,7 +53,7 @@ export const SystemInfoPage = () => {
             title="System Info Details"
             columns={sysInfoMainDataColumns}
             isLoading={isSysInfoLoading}
-            data={sysInfoData?.otherDataAsArray || []}
+            data={sysInfoData?.mainDataAsArray || []}
             options={{
               padding: 'dense',
               pageSize: 1,
