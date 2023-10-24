@@ -339,4 +339,4 @@ enabled:
   permission: ${PERMISSION_ENABLED}
   metrics: ${METRICS_ENABLED}
   aap: ${AAP_ENABLED}
-  carmen: true
+

@@ -42,6 +42,8 @@ import { isCIsAvailable } from './CI';
 import { entityWarningContent } from './EntityWarning';
 import { isPRsAvailable } from './PullRequests';
 
+import { EntityVaultCard } from '@backstage/plugin-vault';
+
 export const overviewContent = (
   <Grid container spacing={3}>
     <Grid item xs={12}>
@@ -55,6 +57,10 @@ export const overviewContent = (
 
       <Grid item>
         <EntityAboutCard />
+      </Grid>
+
+      <Grid item>
+        <EntityVaultCard />
       </Grid>
     </Grid>
 

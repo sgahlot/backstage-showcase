@@ -50,6 +50,7 @@ import {
 } from '@backstage/backend-plugin-manager';
 import { DefaultEventBroker } from '@backstage/plugin-events-backend';
 import sysInfo from './plugins/sys-info';
+import vault from './plugins/vault';
 
 function makeCreateEnv(config: Config, pluginProvider: BackendPluginProvider) {
   const root = getRootLogger();
@@ -183,6 +184,7 @@ async function main() {
     createEnv,
     router: sysInfo,
   });
+  await addPlugin({ plugin: 'vault', apiRouter, createEnv, router: vault });
 
   // const sysInfoEnv = useHotMemoize(module, () => createEnv('sysInfo'));
   // apiRouter.use('/sys-info', await sysInfo(sysInfoEnv));
