@@ -49,7 +49,7 @@ Our current list of plugins within the showcase app include:
 Execute the following two commands to setup authentication with GitHub as well as setup your user in the catalog:
 ```bash
 cp app-config.local.yaml.template app-config.local.yaml
-cp catalog-user-info.yaml.template catalog-user-info.yaml.template
+cp catalog-user-info.yaml.template catalog-user-info.yaml
 ```
 
 **Please set the correct values in `catalog-user-info.yaml` for the following:**
@@ -68,6 +68,7 @@ Follow the steps given in next section to start the app with these two deviation
 
     As all the backends (Backstage backend and any new backend plugins) all use port `7007` and all the frontends (Backstage frontend and
     any new frontend plugins) all use port `3000`. The default command will try to run all of them and you'll run into `address already in use` error
+  * `yarn start-dev` starts ONLY the backstage frontend and backstage backend so you won't run into port conflicts
 
 ## Getting Started
 
