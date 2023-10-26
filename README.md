@@ -46,19 +46,26 @@ Our current list of plugins within the showcase app include:
 - [AAP Backend plugin](https://github.com/janus-idp/backstage-plugins/tree/main/plugins/aap-backend)
 
 ## Extra step to prepare your codebase (AppEng team)
-Execute the following two commands to setup authentication with GitHub as well as setup your user in the catalog:
-```bash
-cp app-config.local.yaml.template app-config.local.yaml
-cp catalog-user-info.yaml.template catalog-user-info.yaml
-```
+Please follow the steps given in this section to setup your environment so that the Backstage app can start without any issues:
+1. Execute the following two commands to setup authentication with GitHub as well as setup your user in the catalog:
+   ```bash
+   cp app-config.local.yaml.template app-config.local.yaml
+   cp catalog-user-info.yaml.template catalog-user-info.yaml
+   ```
 
-**Please set the correct values in `catalog-user-info.yaml` for the following:**
-* `<REPLACE_WITH_YOUR_GITHUB_USER_ID>`
-* `<REPLACE_WITH YOUR DISPLAY NAME>`
+2. **Please set the correct values in `catalog-user-info.yaml` for the following:**
+    * `<REPLACE_WITH_YOUR_GITHUB_USER_ID>`
+    * `<REPLACE_WITH YOUR DISPLAY NAME>`
 
-_For more information on this file and its contents, please refer to https://backstage.io/docs/features/software-catalog/descriptor-format/#kind-user_
+    _For more information on this file and its contents, please refer to https://backstage.io/docs/features/software-catalog/descriptor-format/#kind-user_
 
-Follow the steps given in next section to start the app with these two deviations:
+3. Create an OAuth app and set the following GitHub environment variables (using the newly created GitHub OAuth app):
+    * `AUTH_GITHUB_CLIENT_ID`
+    * `AUTH_GITHUB_CLIENT_SECRET`
+
+    _For more information on the GitHub authentication, please refer to https://backstage.io/docs/auth/github/provider/_
+
+Now, follow the steps given in next section to start the app with these two deviations:
 * Skip the step of copying `app-config.example.yaml`
 * Start the app using `yarn start-dev` (instead of `yarn start`)
   * `yarn start` starts **all** of backends as well as frontends that include the following:
