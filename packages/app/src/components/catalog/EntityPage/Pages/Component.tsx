@@ -33,6 +33,7 @@ import {
   techdocsContent,
 } from '../Content';
 import { defaultEntityPage } from './DefaultEntity';
+import { rhdaContent } from '../Content/RHDA';
 
 const componentEntityPage = (componentType: 'service' | 'website') => (
   <EntityLayout>
@@ -54,6 +55,10 @@ const componentEntityPage = (componentType: 'service' | 'website') => (
       title="Pull/Merge Requests"
     >
       {prContent}
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/rhda" title="RHDA">
+      {rhdaContent}
     </EntityLayout.Route>
 
     <EntityLayout.Route if={isCIsAvailable} path="/ci" title="CI">
