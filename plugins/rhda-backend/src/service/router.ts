@@ -2,6 +2,8 @@ import { errorHandler } from '@backstage/backend-common';
 import express from 'express';
 import Router from 'express-promise-router';
 import { Logger } from 'winston';
+import {healthHandler, rhdaSummaryHandler, rhdaDownloadHtmlReportHandler} from "./exhortHandler";
+
 
 export interface RouterOptions {
   logger: Logger;
@@ -10,15 +12,12 @@ export interface RouterOptions {
 export async function createRouter(
   options: RouterOptions,
 ): Promise<express.Router> {
-  const { logger } = options;
-
   const router = Router();
   router.use(express.json());
 
-  router.get('/health', (_, response) => {
-    logger.info('PONG!');
-    response.json({ status: 'ok' });
-  });
+  router.get('/health', healthHandler);
+  router.get('/rhda-analysis', rhdaSummaryHandler);
+  router.get('/rhda-html-report-download', rhdaDownloadHtmlReportHandler);
   router.use(errorHandler());
   return router;
 }

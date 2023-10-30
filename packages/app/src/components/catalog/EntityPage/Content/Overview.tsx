@@ -53,12 +53,13 @@ export const overviewContent = (
       <Grid item>
         <EntityLinksCard />
       </Grid>
-
-      <Grid item>{rhdaContent}</Grid>
-
       <Grid item>
         <EntityAboutCard />
       </Grid>
+    </Grid>
+
+    <Grid item container spacing={3} xs={12} md={6} lg={4} direction="column">
+      <Grid item>{rhdaContent}</Grid>
     </Grid>
 
     <Grid item container spacing={3} xs={12} md={6} lg={4} direction="column">

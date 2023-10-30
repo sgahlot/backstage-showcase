@@ -1,14 +1,14 @@
 import React from 'react';
-import { ExampleComponent } from './ExampleComponent';
+import { RhdaDownloadReportComponent } from './RhdaDownloadReportComponent';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { screen } from '@testing-library/react';
 import {
   setupRequestMockHandlers,
   renderInTestApp,
-} from '@backstage/test-utils';
+} from "@backstage/test-utils";
+import {screen} from "@testing-library/react";
 
-describe('ExampleComponent', () => {
+describe('RhdaDownloadReportComponent', () => {
   const server = setupServer();
   // Enable sane handlers for network requests
   setupRequestMockHandlers(server);
@@ -21,7 +21,7 @@ describe('ExampleComponent', () => {
   });
 
   it('should render', async () => {
-    await renderInTestApp(<ExampleComponent />);
-    expect(screen.getByText('Welcome to rhda!')).toBeInTheDocument();
+    await renderInTestApp(<RhdaDownloadReportComponent />);
+    expect(screen.getByText('Download Full Report')).toBeInTheDocument();
   });
 });
