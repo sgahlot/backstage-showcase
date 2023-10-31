@@ -1,0 +1,43 @@
+# Need this otherwise we get the following error when starting up:
+#   Backend failed to start up Error: Proxy target must be a string
+proxy:
+  skipInvalidProxies: true
+  endpoints: {}
+
+
+integrations:
+  # Alternate way to integrate GitHub
+  github:
+    - host: github.com
+      # This is a GitHub App. You can find out how to generate this file, and more information
+      token: ${GITHUB_TOKEN}
+
+  # Need this otherwise we get the following Bitbucket error when starting up
+  #    Backend failed to start up Error: Missing required config value at 'integrations.bitbucketServer[0].host'
+  bitbucketServer:
+    - host: bitbucket.com
+      apiBaseUrl: temp
+      username: temp
+      password: temp
+  gitlab:
+    - host: gitlab.com
+      token: temp
+
+catalog:
+  rules:
+    - allow: [Component, System, Group, Resource, Location, Template, API, User]
+  locations:
+    # All of these need to be uncommented for the Templates to show up in "Create..."
+    # Note: integrations.github[].apps must be correctly configured to read GitHub locations
+    - type: file
+      target: ../../catalog-entities/all.yaml
+    # Need this otherwise we get "User not found" error after logging into GitHub
+    - type: file
+      target: ../../catalog-user-info.yaml
+    - type: url
+      target: https://github.com/appeng-backstage/backstage/blob/main/catalog-info.yaml
+    - type: url
+      target: https://github.com/janus-idp/backstage-showcase/blob/main/catalog-entities/all.yaml
+    - type: url
+      target: https://github.com/janus-idp/software-templates/blob/main/showcase-templates.yaml
+
