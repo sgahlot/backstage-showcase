@@ -31,6 +31,7 @@ import catalog from './plugins/catalog';
 import events from './plugins/events';
 import permission from './plugins/permission';
 import proxy from './plugins/proxy';
+import rhda from './plugins/rhda';
 import scaffolder from './plugins/scaffolder';
 import search from './plugins/search';
 
@@ -206,6 +207,7 @@ async function main() {
     router: scaffolder,
   });
   await addPlugin({ plugin: 'events', apiRouter, createEnv, router: events });
+  await addPlugin({ plugin: 'rhda', apiRouter, createEnv, router: rhda });
 
   await addPlugin({
     plugin: 'permission',

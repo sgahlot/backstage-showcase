@@ -58,9 +58,7 @@
   },
   "prettier": "@spotify/prettier-config",
   "lint-staged": {
-    "*": "turbo run prettier:fix --",
-    "*.{jsx,ts,tsx,mjs,cjs}": "turbo run lint --concurrency=1 -- --fix",
-    "!(.eslintrc).js": "turbo run lint --concurrency=1 -- --fix"
+    "*": "turbo run prettier:fix --"
   },
   "packageManager": "yarn@1.22.19"
 }

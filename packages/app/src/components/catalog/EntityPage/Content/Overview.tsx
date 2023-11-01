@@ -41,6 +41,7 @@ import {
 import { isCIsAvailable } from './CI';
 import { entityWarningContent } from './EntityWarning';
 import { isPRsAvailable } from './PullRequests';
+import { rhdaContent } from './RHDA';
 
 export const overviewContent = (
   <Grid container spacing={3}>
@@ -52,10 +53,13 @@ export const overviewContent = (
       <Grid item>
         <EntityLinksCard />
       </Grid>
-
       <Grid item>
         <EntityAboutCard />
       </Grid>
+    </Grid>
+
+    <Grid item container spacing={3} xs={12} md={6} lg={4} direction="column">
+      <Grid item>{rhdaContent}</Grid>
     </Grid>
 
     <Grid item container spacing={3} xs={12} md={6} lg={4} direction="column">
