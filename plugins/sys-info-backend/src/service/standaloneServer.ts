@@ -1,7 +1,11 @@
-import { createServiceBuilder } from '@backstage/backend-common';
+import {
+  createServiceBuilder,
+  loadBackendConfig,
+} from '@backstage/backend-common';
 import { Server } from 'http';
 import { Logger } from 'winston';
 import { createRouter } from './router';
+// import { ConfigReader } from "@backstage/config";
 
 export interface ServerOptions {
   port: number;
@@ -13,9 +17,12 @@ export async function startStandaloneServer(
   options: ServerOptions,
 ): Promise<Server> {
   const logger = options.logger.child({ service: 'sys-info-backend' });
+  const config = await loadBackendConfig({ logger, argv: [] });
+
   logger.debug('Starting application server...');
   const router = await createRouter({
     logger,
+    config,
   });
 
   let service = createServiceBuilder(module)
